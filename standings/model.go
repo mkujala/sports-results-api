@@ -59,21 +59,22 @@ func awayFromDB() ([]Standings, error) {
 }
 
 // Insert standings to DB
-func insertDB(r *http.Request) (Standings, error) {
-	stnds := Standings{}
+func insertDB(r *http.Request) ([]Standings, error) {
+	stnds := []Standings{}
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		return stnds, err
 	}
-	fmt.Printf("type %T, value %v\n", body, string(body)) // DEBUG print request body
+	// fmt.Printf("type %T, value %v\n", body, string(body)) // DEBUG print request body
 
 	err = json.Unmarshal(body, &stnds)
 	if err != nil {
 		return stnds, err
 	}
-	stnds.ID = bson.NewObjectId()
+	fmt.Printf("%T, %v", stnds, stnds)
+	// stnds.ID = bson.NewObjectId()
 
 	// insert values
-	err = db.Standings.Insert(stnds)
+	err = db.Standings.Insert(stnds) // WIP
 	return stnds, err
 }
