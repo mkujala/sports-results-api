@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"sports-results/standings"
 
-	// _ "sports-results/db"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -19,8 +19,9 @@ func main() {
 	router := httprouter.New()
 
 	router.GET(apiURL+"/", hello)
-	// router.POST(apiURL+"/product", product.Insert)
-	// router.DELETE(apiURL+"/product/:id", product.Delete)
+	router.GET(apiURL+"/standings", standings.GetAll)
+	router.POST(apiURL+"/standings", standings.Insert)
+	// router.DELETE(apiURL+"/standings/:id", standings.Delete)
 
 	err := http.ListenAndServe(port, router)
 	if err != nil {

@@ -9,8 +9,11 @@ import (
 // DB session
 var DB *mgo.Database
 
-// Games collection
+// Games Collection
 var Games *mgo.Collection
+
+// Standings Collection
+var Standings *mgo.Collection
 
 func init() {
 	const (
@@ -29,6 +32,7 @@ func init() {
 
 	DB = s.DB(mongoDB)
 	Games = DB.C("games")
+	Standings = DB.C("standings")
 
 	fmt.Printf("You connected to your %s database.\n", mongoDB)
 }
