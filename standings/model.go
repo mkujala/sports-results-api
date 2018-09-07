@@ -2,7 +2,6 @@ package standings
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"sports-results/db"
@@ -12,7 +11,7 @@ import (
 
 // Standings is representation of standings document in mongodb
 type Standings struct {
-	ID      bson.ObjectId `json:"id" bson:"_id"`
+	ID      bson.ObjectId `json:"id,omitempty" bson:"_id,omitempty"`
 	Team    string        `json:"team" bson:"team"`
 	Season  int           `json:"season" bson:"season"`
 	League  string        `json:"league" bson:"league"`
@@ -65,16 +64,19 @@ func insertDB(r *http.Request) ([]Standings, error) {
 	if err != nil {
 		return stnds, err
 	}
-	// fmt.Printf("type %T, value %v\n", body, string(body)) // DEBUG print request body
 
 	err = json.Unmarshal(body, &stnds)
 	if err != nil {
 		return stnds, err
 	}
-	fmt.Printf("%T, %v", stnds, stnds)
-	// stnds.ID = bson.NewObjectId()
+
+	// convert []Standings to []interface
+	s := make([]interface{}, len(stnds))
+	for i, m := range stnds {
+		s[i] = m
+	}
 
 	// insert values
-	err = db.Standings.Insert(stnds) // WIP
+	err = db.Standings.Insert(s...) // WIP
 	return stnds, err
 }
