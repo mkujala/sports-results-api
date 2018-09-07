@@ -8,9 +8,22 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-// GetAll standings from DB
-func GetAll(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	stnds, err := allFromDB()
+// Get standings from DB
+func Get(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	stnds := []Standings{}
+	var err error
+
+	switch p.ByName("venue") {
+	case "all":
+		stnds, err = allFromDB()
+	case "home":
+		stnds, err = homeFromDB()
+	case "away":
+		stnds, err = awayFromDB()
+	default:
+		stnds, err = allFromDB()
+	}
+
 	if err != nil {
 		http.Error(w, http.StatusText(500)+err.Error(), http.StatusInternalServerError)
 		return

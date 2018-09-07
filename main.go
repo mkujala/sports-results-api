@@ -19,7 +19,7 @@ func main() {
 	router := httprouter.New()
 
 	router.GET(apiURL+"/", hello)
-	router.GET(apiURL+"/standings", standings.GetAll)
+	router.GET(apiURL+"/standings/:venue", standings.Get)
 	router.POST(apiURL+"/standings", standings.Insert)
 	// router.DELETE(apiURL+"/standings/:id", standings.Delete)
 
