@@ -33,19 +33,26 @@ func Standings(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	fmt.Fprintf(w, "%#v\n", stnds)
 
 	// testing pts avg
-	fmt.Fprintf(w, "\n%v, ptsAvg: ", stnds[2].Team)
-	fmt.Fprintf(w, "%.2f\n", float32(stnds[2].PTS)/float32(stnds[2].GP))
+	// fmt.Fprintf(w, "\n%v, ptsAvg: ", stnds[2].Team)
+	// fmt.Fprintf(w, "%.2f\n", float32(stnds[2].PTS)/float32(stnds[2].GP))
+	fmt.Fprintf(w, "%#v\n", PtsAvg(stnds))
 }
 
 // PtsAvg calculates pts average per game
-func PtsAvg(s []standings.Standings) {
+func PtsAvg(s []standings.Standings) []Stats {
 	//-----------------
 	// WORK IN PROGRESS
 	//-----------------
-	/*
-		stats := []Stats{}
-		for i, j := range s {
-			stats[i] = s[i]
-		}
-	*/
+	var stats []Stats
+	// stats[0].Team = "test"
+	// fmt.Printf("%#v\n", stats)
+	for _, j := range s {
+		statLine := Stats{}
+		statLine.Team = j.Team
+		statLine.PTS = j.PTS
+		statLine.PtsAvg = float32(j.PTS) / float32(j.GP)
+		stats = append(stats, statLine)
+	}
+
+	return stats
 }
