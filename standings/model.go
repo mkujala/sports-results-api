@@ -28,9 +28,9 @@ type Standings struct {
 }
 
 // All reads full standings from DB (home & away games)
-func allFromDB() ([]Standings, error) {
+func allFromDB(league string, season int) ([]Standings, error) {
 	stnds := []Standings{}
-	err := db.Standings.Find(bson.M{"venue": "all"}).All(&stnds)
+	err := db.Standings.Find(bson.M{"venue": "all", "league": league}).All(&stnds)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +38,7 @@ func allFromDB() ([]Standings, error) {
 }
 
 // Home reads standings from DB for home games
-func homeFromDB() ([]Standings, error) {
+func homeFromDB(league string, season int) ([]Standings, error) {
 	stnds := []Standings{}
 	err := db.Standings.Find(bson.M{"venue": "home"}).All(&stnds)
 	if err != nil {
@@ -48,7 +48,7 @@ func homeFromDB() ([]Standings, error) {
 }
 
 // Away reads standings from DB for away games
-func awayFromDB() ([]Standings, error) {
+func awayFromDB(league string, season int) ([]Standings, error) {
 	stnds := []Standings{}
 	err := db.Standings.Find(bson.M{"venue": "away"}).All(&stnds)
 	if err != nil {
@@ -70,13 +70,13 @@ func insertDB(r *http.Request) ([]Standings, error) {
 		return stnds, err
 	}
 
-	// convert []Standings to []interface
+	// convert []Standings{} to []interface{}
 	s := make([]interface{}, len(stnds))
 	for i, m := range stnds {
 		s[i] = m
 	}
 
-	// insert values
-	err = db.Standings.Insert(s...) // WIP
+	// insert documents
+	err = db.Standings.Insert(s...)
 	return stnds, err
 }

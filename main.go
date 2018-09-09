@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"sports-results/leagues/liiga"
 	"sports-results/standings"
 
 	"github.com/julienschmidt/httprouter"
@@ -21,6 +22,7 @@ func main() {
 	router.GET(apiURL+"/", hello)
 	router.GET(apiURL+"/standings/:venue", standings.Get)
 	router.POST(apiURL+"/standings", standings.Insert)
+	router.GET(apiURL+"/liiga/standings/:season/:venue", liiga.Standings)
 	// router.DELETE(apiURL+"/standings/:id", standings.Delete)
 
 	err := http.ListenAndServe(port, router)

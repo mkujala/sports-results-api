@@ -15,13 +15,13 @@ func Get(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	switch p.ByName("venue") {
 	case "all":
-		stnds, err = allFromDB()
-	case "home":
+		stnds, err = allFromDB("liiga", 20172018)
+	/*case "home":
 		stnds, err = homeFromDB()
 	case "away":
-		stnds, err = awayFromDB()
+		stnds, err = awayFromDB()*/
 	default:
-		stnds, err = allFromDB()
+		stnds, err = allFromDB("liiga", 0)
 	}
 
 	if err != nil {
