@@ -1,6 +1,7 @@
 package nba
 
 import (
+	"math"
 	"net/http"
 	"sports-results/formatter"
 	"sports-results/leagues"
@@ -9,7 +10,10 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-const league = "nba"
+const (
+	league  = "nba"
+	pythExp = 13.91
+)
 
 // Standings for NBA
 func Standings(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
@@ -37,6 +41,7 @@ func addAverages(s []standings.Standings) []Stats {
 		statLine.Wins = j.Wins
 		statLine.Loses = j.Loses
 		statLine.WinPercent = formatter.Round2F(float64(j.OTWins+j.Wins) / float64(j.GP))
+		statLine.PythagoreanWinPercent = formatter.Round2F(pythagWin(j.GF, j.GA)) // maybe change % -> number of wins
 		statLine.GA = j.GA
 		statLine.GF = j.GF
 		statLine.GAavg = formatter.Round2F((float64(j.GA) / float64(j.GP)))
@@ -45,4 +50,10 @@ func addAverages(s []standings.Standings) []Stats {
 	}
 
 	return stats
+}
+
+func pythagWin(gf, ga int) float64 {
+	gaExp := math.Pow(float64(ga), pythExp)
+	gfExp := math.Pow(float64(gf), pythExp)
+	return gfExp / (gfExp + gaExp)
 }
