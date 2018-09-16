@@ -1,14 +1,17 @@
 package liiga
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
+	"sports-results/formatter"
 	"sports-results/standings"
 	"strconv"
 
 	"github.com/julienschmidt/httprouter"
 )
 
+// Standings for Liiga
 func Standings(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var stnds []standings.Standings
 	venue := p.ByName("venue")
@@ -30,27 +33,41 @@ func Standings(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	fmt.Fprintf(w, "%#v\n", stnds)
-
-	// testing pts avg
-	// fmt.Fprintf(w, "\n%v, ptsAvg: ", stnds[2].Team)
-	// fmt.Fprintf(w, "%.2f\n", float32(stnds[2].PTS)/float32(stnds[2].GP))
-	fmt.Fprintf(w, "%#v\n", PtsAvg(stnds))
+	ls := addAverages(stnds)
+	sjson, err := json.Marshal(ls)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated) // 201
+	fmt.Fprintf(w, "%s\n", sjson)
 }
 
-// PtsAvg calculates pts average per game
-func PtsAvg(s []standings.Standings) []Stats {
-	//-----------------
-	// WORK IN PROGRESS
-	//-----------------
+// addAverages calculates liiga specific averages
+func addAverages(s []standings.Standings) []Stats {
 	var stats []Stats
-	// stats[0].Team = "test"
-	// fmt.Printf("%#v\n", stats)
+
 	for _, j := range s {
 		statLine := Stats{}
 		statLine.Team = j.Team
+		statLine.League = j.League
+		statLine.Season = j.Season
+		statLine.Venue = j.Venue
+		statLine.GP = j.GP
+		statLine.Wins = j.Wins
+		statLine.Loses = j.Loses
+		statLine.OTLoses = j.OTLoses
+		statLine.OTWins = j.OTWins
+		statLine.StrWinPercent = formatter.Round2F(float64(j.Wins) / float64(j.GP))
+		statLine.WinPercent = formatter.Round2F(float64(j.OTWins+j.Wins) / float64(j.GP))
+		statLine.OTpercent = formatter.Round2F(float64(j.OTWins+j.OTLoses) / float64(j.GP))
+		statLine.GA = j.GA
+		statLine.GF = j.GF
+		statLine.GAavg = formatter.Round2F((float64(j.GA) / float64(j.GP)))
+		statLine.GFavg = formatter.Round2F((float64(j.GF) / float64(j.GP)))
 		statLine.PTS = j.PTS
-		statLine.PtsAvg = float32(j.PTS) / float32(j.GP)
+		statLine.PtsAvg = formatter.Round2F((float64(j.PTS) / float64(j.GP)))
 		stats = append(stats, statLine)
 	}
 
