@@ -1,22 +1,20 @@
 package standings
 
 // GetFromDB fetches standings from DB
-func GetFromDB(league, venue string, season int) ([]Standings, error) {
+func GetFromDB(league, venue string, season int, conference string) ([]Standings, error) {
 	stnds := []Standings{}
 	var err error
 
 	switch venue {
 	case "all":
-		stnds, err = allFromDB(league, season)
+		stnds, err = allFromDB(league, season, conference)
 	case "home":
-		stnds, err = homeFromDB(league, season)
+		stnds, err = homeFromDB(league, season, conference)
 	case "away":
-		stnds, err = awayFromDB(league, season)
+		stnds, err = awayFromDB(league, season, conference)
 	default:
-		stnds, err = allFromDB(league, season)
+		stnds, err = allFromDB(league, season, conference)
 	}
-
-	// stnds, err := allFromDB(league, venue, season)
 
 	if err != nil {
 		return nil, err

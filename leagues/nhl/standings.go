@@ -16,7 +16,8 @@ func Standings(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var stnds []standings.Standings
 	venue := p.ByName("venue")
 	season := p.ByName("season")
-	stnds = leagues.StandingsFromDB(league, venue, season)
+	conference := p.ByName("conference")
+	stnds = leagues.StandingsFromDB(league, venue, season, conference)
 	ls := addAverages(stnds)
 	leagues.JSONout(w, ls)
 }

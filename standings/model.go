@@ -29,9 +29,15 @@ type Standings struct {
 }
 
 // All reads full standings from DB (home & away games)
-func allFromDB(league string, season int) ([]Standings, error) {
+func allFromDB(league string, season int, conference string) ([]Standings, error) {
 	stnds := []Standings{}
-	err := db.Standings.Find(bson.M{"venue": "all", "league": league}).All(&stnds)
+	var err error
+	switch {
+	case len(conference) == 0:
+		err = db.Standings.Find(bson.M{"venue": "all", "league": league}).All(&stnds)
+	case len(conference) > 0:
+		err = db.Standings.Find(bson.M{"venue": "all", "league": league, "conference": conference}).All(&stnds)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -39,9 +45,15 @@ func allFromDB(league string, season int) ([]Standings, error) {
 }
 
 // Home reads standings from DB for home games
-func homeFromDB(league string, season int) ([]Standings, error) {
+func homeFromDB(league string, season int, conference string) ([]Standings, error) {
 	stnds := []Standings{}
-	err := db.Standings.Find(bson.M{"venue": "home", "league": league}).All(&stnds)
+	var err error
+	switch {
+	case len(conference) == 0:
+		err = db.Standings.Find(bson.M{"venue": "home", "league": league}).All(&stnds)
+	case len(conference) > 0:
+		err = db.Standings.Find(bson.M{"venue": "home", "league": league, "conference": conference}).All(&stnds)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -49,9 +61,15 @@ func homeFromDB(league string, season int) ([]Standings, error) {
 }
 
 // Away reads standings from DB for away games
-func awayFromDB(league string, season int) ([]Standings, error) {
+func awayFromDB(league string, season int, conference string) ([]Standings, error) {
 	stnds := []Standings{}
-	err := db.Standings.Find(bson.M{"venue": "away", "league": league}).All(&stnds)
+	var err error
+	switch {
+	case len(conference) == 0:
+		err = db.Standings.Find(bson.M{"venue": "away", "league": league}).All(&stnds)
+	case len(conference) > 0:
+		err = db.Standings.Find(bson.M{"venue": "away", "league": league, "conference": conference}).All(&stnds)
+	}
 	if err != nil {
 		return nil, err
 	}

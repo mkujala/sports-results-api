@@ -12,7 +12,7 @@ import (
 type leagueData interface{}
 
 // StandingsFromDB generalizes data fetch from DB for all leagues
-func StandingsFromDB(league, venue, season string) []standings.Standings {
+func StandingsFromDB(league, venue, season, conference string) []standings.Standings {
 	var stnds []standings.Standings
 	iSeason, err := strconv.Atoi(season)
 	if err != nil {
@@ -22,7 +22,7 @@ func StandingsFromDB(league, venue, season string) []standings.Standings {
 
 	switch venue {
 	case "all", "home", "away":
-		stnds, err = standings.GetFromDB(league, venue, iSeason)
+		stnds, err = standings.GetFromDB(league, venue, iSeason, conference)
 	default:
 		log.Fatal("error: invalid venue, " + err.Error())
 		return nil
