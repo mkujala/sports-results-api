@@ -1,12 +1,10 @@
 package liiga
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
 	"sports-results/formatter"
+	"sports-results/leagues"
 	"sports-results/standings"
-	"strconv"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -15,33 +13,11 @@ import (
 func Standings(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var stnds []standings.Standings
 	venue := p.ByName("venue")
-	season, err := strconv.Atoi(p.ByName("season"))
-	if err != nil {
-		http.Error(w, "error: invalid season, "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	switch p.ByName("venue") {
-	case "all", "home", "away":
-		stnds, err = standings.GetFromDB("liiga", venue, season)
-	default:
-		http.Error(w, "error: invalid venue", http.StatusInternalServerError)
-		return
-	}
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	season := p.ByName("season")
+	stnds = leagues.StandingsFromDB("liiga", venue, season)
 
 	ls := addAverages(stnds)
-	sjson, err := json.Marshal(ls)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated) // 201
-	fmt.Fprintf(w, "%s\n", sjson)
+	leagues.JsonOut(w, ls)
 }
 
 // addAverages calculates liiga specific averages
