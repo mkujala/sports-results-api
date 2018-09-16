@@ -11,20 +11,21 @@ import (
 
 // Standings is representation of standings document in mongodb
 type Standings struct {
-	ID      bson.ObjectId `json:"id,omitempty" bson:"_id,omitempty"`
-	Team    string        `json:"team" bson:"team"`
-	Season  int           `json:"season" bson:"season"`
-	League  string        `json:"league" bson:"league"`
-	Venue   string        `json:"venue" bson:"venue"`
-	GP      int           `json:"gp" bson:"gp"`
-	Wins    int           `json:"wins" bson:"wins"`
-	Loses   int           `json:"loses" bson:"loses"`
-	Draws   int           `json:"draws,omitempty" bson:"draws,omitempty"`
-	OTLoses int           `json:"otLoses,omitempty" bson:"otLoses,omitempty"`
-	OTWins  int           `json:"otWins,omitempty" bson:"otWins,omitempty"`
-	GA      int           `json:"ga" bson:"ga"`
-	GF      int           `json:"gf" bson:"gf"`
-	PTS     int           `json:"pts" bson:"pts"`
+	ID         bson.ObjectId `json:"id,omitempty" bson:"_id,omitempty"`
+	Team       string        `json:"team" bson:"team"`
+	Season     int           `json:"season" bson:"season"`
+	League     string        `json:"league" bson:"league"`
+	Conference string        `json:"conference,omitempty" bson:"conference,omitempty"`
+	Venue      string        `json:"venue" bson:"venue"`
+	GP         int           `json:"gp" bson:"gp"`
+	Wins       int           `json:"wins" bson:"wins"`
+	Loses      int           `json:"loses" bson:"loses"`
+	Draws      int           `json:"draws,omitempty" bson:"draws,omitempty"`
+	OTLoses    int           `json:"otLoses,omitempty" bson:"otLoses,omitempty"`
+	OTWins     int           `json:"otWins,omitempty" bson:"otWins,omitempty"`
+	GA         int           `json:"ga" bson:"ga"`
+	GF         int           `json:"gf" bson:"gf"`
+	PTS        int           `json:"pts" bson:"pts"`
 }
 
 // All reads full standings from DB (home & away games)
@@ -40,7 +41,7 @@ func allFromDB(league string, season int) ([]Standings, error) {
 // Home reads standings from DB for home games
 func homeFromDB(league string, season int) ([]Standings, error) {
 	stnds := []Standings{}
-	err := db.Standings.Find(bson.M{"venue": "home"}).All(&stnds)
+	err := db.Standings.Find(bson.M{"venue": "home", "league": league}).All(&stnds)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +51,7 @@ func homeFromDB(league string, season int) ([]Standings, error) {
 // Away reads standings from DB for away games
 func awayFromDB(league string, season int) ([]Standings, error) {
 	stnds := []Standings{}
-	err := db.Standings.Find(bson.M{"venue": "away"}).All(&stnds)
+	err := db.Standings.Find(bson.M{"venue": "away", "league": league}).All(&stnds)
 	if err != nil {
 		return nil, err
 	}

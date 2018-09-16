@@ -9,15 +9,16 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+const league = "epl"
+
 // Standings for EPL
 func Standings(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var stnds []standings.Standings
 	venue := p.ByName("venue")
 	season := p.ByName("season")
-	stnds = leagues.StandingsFromDB("epl", venue, season)
-
+	stnds = leagues.StandingsFromDB(league, venue, season)
 	ls := addAverages(stnds)
-	leagues.JsonOut(w, ls)
+	leagues.JSONout(w, ls)
 }
 
 // addAverages calculates liiga specific averages

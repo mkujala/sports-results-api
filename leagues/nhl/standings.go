@@ -1,4 +1,4 @@
-package liiga
+package nhl
 
 import (
 	"net/http"
@@ -9,9 +9,9 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-const league = "liiga"
+const league = "nhl"
 
-// Standings for Liiga
+// Standings for NHL
 func Standings(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var stnds []standings.Standings
 	venue := p.ByName("venue")
@@ -21,7 +21,7 @@ func Standings(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	leagues.JSONout(w, ls)
 }
 
-// addAverages calculates liiga specific averages
+// addAverages calculates NHL specific averages
 func addAverages(s []standings.Standings) []Stats {
 	var stats []Stats
 
@@ -29,6 +29,7 @@ func addAverages(s []standings.Standings) []Stats {
 		statLine := Stats{}
 		statLine.Team = j.Team
 		statLine.League = j.League
+		statLine.Conference = j.Conference
 		statLine.Season = j.Season
 		statLine.Venue = j.Venue
 		statLine.GP = j.GP

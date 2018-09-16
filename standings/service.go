@@ -1,5 +1,6 @@
 package standings
 
+// GetFromDB fetches standings from DB
 func GetFromDB(league, venue string, season int) ([]Standings, error) {
 	stnds := []Standings{}
 	var err error

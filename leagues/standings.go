@@ -9,9 +9,9 @@ import (
 	"strconv"
 )
 
-type Data interface{}
+type leagueData interface{}
 
-// Standings generalizes
+// StandingsFromDB generalizes data fetch from DB for all leagues
 func StandingsFromDB(league, venue, season string) []standings.Standings {
 	var stnds []standings.Standings
 	iSeason, err := strconv.Atoi(season)
@@ -35,15 +35,14 @@ func StandingsFromDB(league, venue, season string) []standings.Standings {
 	return stnds
 }
 
-func JsonOut(w http.ResponseWriter, data Data) {
-
+// JSONout marshals data struct and outputs json
+func JSONout(w http.ResponseWriter, data leagueData) {
 	sjson, err := json.Marshal(data)
 	if err != nil {
-		log.Fatal(err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated) // 201
 	fmt.Fprintf(w, "%s\n", sjson)
-
 }
