@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"sports-results/leagues/epl"
 	"sports-results/leagues/liiga"
+	"sports-results/leagues/nba"
 	"sports-results/leagues/nhl"
 	"sports-results/standings"
 
@@ -27,6 +28,7 @@ func main() {
 	router.GET(apiURL+"/liiga/standings/:season/:venue", liiga.Standings)
 	router.GET(apiURL+"/epl/standings/:season/:venue", epl.Standings)
 	router.GET(apiURL+"/nhl/standings/:season/:venue/:conference", nhl.Standings)
+	router.GET(apiURL+"/nba/standings/:season/:venue/:conference", nba.Standings)
 	// router.DELETE(apiURL+"/standings/:id", standings.Delete)
 
 	err := http.ListenAndServe(port, router)

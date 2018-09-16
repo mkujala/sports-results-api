@@ -14,11 +14,8 @@ type Stats struct {
 	Wins       int           `json:"wins" bson:"wins"`
 	Loses      int           `json:"loses" bson:"loses"`
 	WinPercent float64       `json:"win_p,omitempty" bson:"win_p,omitempty"`
-	OTpercent  float64       `json:"ot_p,omitempty" bson:"ot_p,omitempty"`
 	GA         int           `json:"ga" bson:"ga"`
 	GF         int           `json:"gf" bson:"gf"`
 	GAavg      float64       `json:"gaAvg" bson:"gaAvg"`
 	GFavg      float64       `json:"gfAvg" bson:"gfAvg"`
-	PTS        int           `json:"pts" bson:"pts"`
-	PtsAvg     float64       `json:"ptsAvg,omitempty" bson:"ptsAvg,omitempty"`
 }

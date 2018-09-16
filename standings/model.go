@@ -25,7 +25,7 @@ type Standings struct {
 	OTWins     int           `json:"otWins,omitempty" bson:"otWins,omitempty"`
 	GA         int           `json:"ga" bson:"ga"`
 	GF         int           `json:"gf" bson:"gf"`
-	PTS        int           `json:"pts" bson:"pts"`
+	PTS        int           `json:"pts,omitempty" bson:"pts,omitempty"`
 }
 
 // All reads full standings from DB (home & away games)
