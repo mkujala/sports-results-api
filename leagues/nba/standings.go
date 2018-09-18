@@ -41,7 +41,7 @@ func addAverages(s []standings.Standings) []Stats {
 		statLine.Wins = j.Wins
 		statLine.Loses = j.Loses
 		statLine.WinPercent = formatter.Round2F(float64(j.OTWins+j.Wins) / float64(j.GP))
-		statLine.PythagoreanWinPercent = formatter.Round2F(pythagWin(j.GF, j.GA)) // maybe change % -> number of wins
+		statLine.PythagoreanWins = formatter.Round2F(pythagWin(j.GF, j.GA) * float64(j.GP))
 		statLine.GA = j.GA
 		statLine.GF = j.GF
 		statLine.GAavg = formatter.Round2F((float64(j.GA) / float64(j.GP)))
@@ -52,6 +52,8 @@ func addAverages(s []standings.Standings) []Stats {
 	return stats
 }
 
+// pyhthagWin calculates Pythagorean win%
+// http://wikipedia.org/wiki/Pythagorean_expectation
 func pythagWin(gf, ga int) float64 {
 	gaExp := math.Pow(float64(ga), pythExp)
 	gfExp := math.Pow(float64(gf), pythExp)
