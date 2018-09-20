@@ -26,8 +26,11 @@ func getSeasons(venue string, seasons []string) {
 	fmt.Println(stnds)
 }
 
-// calc averages for top2 teams for all, home, away
-// wins, loses, otwins, otloses, gf, ga, pts, pts/gp, gf/gp, ga/gp, win%, ot%
+func top2Averages() {
+	// WIP
+	// calc averages for top2 teams for all, home, away
+	// wins, loses, otwins, otloses, gf, ga, pts, pts/gp, gf/gp, ga/gp, win%, ot%
+}
 
 // averages for top6
 

@@ -34,9 +34,9 @@ func allFromDB(league string, season int, conference string) ([]Standings, error
 	var err error
 	switch {
 	case len(conference) == 0:
-		err = db.Standings.Find(bson.M{"venue": "all", "league": league, "season": season}).All(&stnds)
+		err = db.Standings.Find(bson.M{"venue": "all", "league": league, "season": season}).Sort("-pts", "-wins", "-otWins", "-otLoses", "-draws").All(&stnds)
 	case len(conference) > 0:
-		err = db.Standings.Find(bson.M{"venue": "all", "league": league, "season": season, "conference": conference}).All(&stnds)
+		err = db.Standings.Find(bson.M{"venue": "all", "league": league, "season": season, "conference": conference}).Sort("-pts", "-wins", "-otWins", "-otLoses", "-draws").All(&stnds)
 	}
 	if err != nil {
 		return nil, err
