@@ -6,21 +6,23 @@ import (
 	"github.com/globalsign/mgo"
 )
 
-// DB session
-var DB *mgo.Database
+const (
+	mongoURI = "mongodb://localhost"
+	mongoDB  = "sport-results"
+)
 
-// Games Collection
-var Games *mgo.Collection
+var (
+	// DB session
+	DB *mgo.Database
 
-// Standings Collection
-var Standings *mgo.Collection
+	// Games Collection
+	Games *mgo.Collection
+
+	// Standings Collection
+	Standings *mgo.Collection
+)
 
 func init() {
-	const (
-		mongoURI = "mongodb://localhost"
-		mongoDB  = "sport-results"
-	)
-
 	s, err := mgo.Dial(mongoURI)
 	if err != nil {
 		panic(err)
