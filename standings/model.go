@@ -50,9 +50,9 @@ func homeFromDB(league string, season int, conference string) ([]Standings, erro
 	var err error
 	switch {
 	case len(conference) == 0:
-		err = db.Standings.Find(bson.M{"venue": "home", "league": league}).All(&stnds)
+		err = db.Standings.Find(bson.M{"venue": "home", "league": league, "season": season}).All(&stnds)
 	case len(conference) > 0:
-		err = db.Standings.Find(bson.M{"venue": "home", "league": league, "conference": conference}).All(&stnds)
+		err = db.Standings.Find(bson.M{"venue": "home", "league": league, "season": season, "conference": conference}).All(&stnds)
 	}
 	if err != nil {
 		return nil, err
@@ -66,9 +66,9 @@ func awayFromDB(league string, season int, conference string) ([]Standings, erro
 	var err error
 	switch {
 	case len(conference) == 0:
-		err = db.Standings.Find(bson.M{"venue": "away", "league": league}).All(&stnds)
+		err = db.Standings.Find(bson.M{"venue": "away", "league": league, "season": season}).All(&stnds)
 	case len(conference) > 0:
-		err = db.Standings.Find(bson.M{"venue": "away", "league": league, "conference": conference}).All(&stnds)
+		err = db.Standings.Find(bson.M{"venue": "away", "league": league, "season": season, "conference": conference}).All(&stnds)
 	}
 	if err != nil {
 		return nil, err

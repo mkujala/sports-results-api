@@ -3,6 +3,7 @@ package liiga
 import (
 	"fmt"
 	"net/http"
+	"sports-results/formatter"
 	"sports-results/leagues"
 	"sports-results/standings"
 	"strings"
@@ -36,7 +37,12 @@ func top2Averages(s yearlyStnds) {
 	// calc averages for top2 teams for all, home, away
 	// wins, loses, otwins, otloses, gf, ga, pts, pts/gp, gf/gp, ga/gp, win%, ot%
 	for _, season := range s.list {
-		fmt.Println(season[0].Team, season[1].Team, "pts avg top2", (float64(season[0].PTS)+float64(season[1].PTS))/2)
+		fmt.Println(
+			season[0].Team,
+			season[1].Team,
+			"| PtsAvg top2:", average(float64(season[0].PTS), float64(season[1].PTS)),
+			"| Pts/GP:", formatter.Round2F(average(float64(season[0].PTS), float64(season[1].PTS))/float64((season[0].GP))),
+		)
 	}
 }
 
@@ -45,3 +51,11 @@ func top2Averages(s yearlyStnds) {
 // averages for 7-10
 
 // averages for bottom3
+func average(nums ...float64) float64 {
+	divider := float64(len(nums))
+	var total float64
+	for _, val := range nums {
+		total = total + val
+	}
+	return (total / divider)
+}
