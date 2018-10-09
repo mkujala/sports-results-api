@@ -60,14 +60,14 @@ func getSeasons(venue string, seasons []string) yearlyStnds {
 	return stnds
 }
 
-func averagesTeams(s yearlyStnds, count int) {
+func averagesTeams(s yearlyStnds, count int) { // REMOVE this and move logic to seasonAverages
 	for _, team := range s.list {
 		seasonAverages(team, count)
 	}
 }
 
 // wins, loses, otwins, otloses, win%reg, win%all, ot%, gf, ga, gf/gp, ga/gp, pts, pts/gp
-func seasonAverages(s []standings.Standings, count int) {
+func seasonAverages(s []standings.Standings, count int) { // return []liigaAverages
 	var (
 		wins,
 		loses,
