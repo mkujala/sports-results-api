@@ -5,7 +5,6 @@ import (
 	"sports-results/formatter"
 	"sports-results/leagues"
 	"sports-results/standings"
-	"strconv"
 	"strings"
 
 	"github.com/julienschmidt/httprouter"
@@ -15,6 +14,7 @@ type yearlyStnds struct {
 	list map[string][]standings.Standings
 }
 
+// wins, loses, otwins, otloses, win%reg, win%all, ot%, gf, ga, gf/gp, ga/gp, pts, pts/gp
 type liigaAverages struct {
 	Season      int
 	Description string
@@ -40,84 +40,94 @@ func Averages(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	stnds := getSeasons(venue, seasons)
 
 	// averages for top2
-	averagesTeams(stnds, 2)
+	response := seasonAverages(stnds, 0, 2, "top2")
 
 	// averages for top6
-	averagesTeams(stnds, 6)
+	response = append(response, seasonAverages(stnds, 0, 6, "top6")...)
 
 	// averages for 7-10
+	response = append(response, seasonAverages(stnds, 6, 10, "top7to10")...)
 
 	// averages for bottom3
+	response = append(response, seasonAverages(stnds, 3, 0, "bottom3")...)
+
+	leagues.JSONout(w, response)
 }
 
 // GetSeasons get n last seasons sorted by points
 func getSeasons(venue string, seasons []string) yearlyStnds {
 	var stnds = yearlyStnds{list: make(map[string][]standings.Standings)}
-
 	for _, season := range seasons {
 		stnds.list[season] = leagues.StandingsFromDB(league, venue, season, conference)
 	}
 	return stnds
 }
 
-func averagesTeams(s yearlyStnds, count int) { // REMOVE this and move logic to seasonAverages
+// seasonAverages takes in yearlyStandings, start, end int, name string
+// it returns slice of calculated liigaAverages
+// if end != 0 -> start is index of first team and end is index of last team to count in averages
+// if end == 0 -> start is count for how many teams from the end to count in averages
+// 		example: end = 0, start = 3 -> count averages for bottom 3 teams
+// name is used as Description in liigaAverages
+func seasonAverages(s yearlyStnds, start, end int, name string) []liigaAverages {
+	sAvg := []liigaAverages{}
 	for _, team := range s.list {
-		seasonAverages(team, count)
+		var (
+			wins,
+			loses,
+			otwins,
+			otloses,
+			winRegP,
+			winAllP,
+			otP,
+			gf,
+			ga,
+			gfGP,
+			gaGP,
+			points,
+			ptsGP []float64
+		)
+		if end == 0 { // TRUE -> select teams from bottom and start tells how many
+			end = len(team)
+			start = end - start
+		}
+
+		for i := start; i < end; i++ {
+			wins = append(wins, float64(team[i].Wins))
+			loses = append(loses, float64(team[i].Loses))
+			otwins = append(otwins, float64(team[i].OTWins))
+			otloses = append(otloses, float64(team[i].OTLoses))
+			winRegP = append(winRegP, float64(team[i].Wins)/float64(team[i].GP))
+			winAllP = append(winAllP, (float64(team[i].Wins)+float64(team[i].OTWins))/float64(team[i].GP))
+			otP = append(otP, (float64(team[i].OTLoses)+float64(team[i].OTWins))/float64(team[i].GP))
+			gf = append(gf, float64(team[i].GF))
+			ga = append(ga, float64(team[i].GA))
+			gfGP = append(gfGP, float64(team[i].GF)/float64(team[i].GP))
+			gaGP = append(gaGP, float64(team[i].GA)/float64(team[i].GP))
+			points = append(points, float64(team[i].PTS))
+			ptsGP = append(ptsGP, float64(team[i].PTS)/float64(team[i].GP))
+		}
+
+		var output liigaAverages
+		output.Season = team[0].Season
+		output.Description = name
+		output.Wins = average(wins...)
+		output.Loses = average(loses...)
+		output.Otwins = average(otwins...)
+		output.Otloses = average(otloses...)
+		output.WinRegP = average(winRegP...)
+		output.WinAllP = average(winAllP...)
+		output.OtP = average(otP...)
+		output.GF = average(gf...)
+		output.GA = average(ga...)
+		output.GFgp = average(gfGP...)
+		output.GAgp = average(gaGP...)
+		output.Points = average(points...)
+		output.PTSgp = average(ptsGP...)
+
+		sAvg = append(sAvg, output)
 	}
-}
-
-// wins, loses, otwins, otloses, win%reg, win%all, ot%, gf, ga, gf/gp, ga/gp, pts, pts/gp
-func seasonAverages(s []standings.Standings, count int) { // return []liigaAverages
-	var (
-		wins,
-		loses,
-		otwins,
-		otloses,
-		winRegP,
-		winAllP,
-		otP,
-		gf,
-		ga,
-		gfGP,
-		gaGP,
-		points,
-		ptsGP []float64
-	)
-
-	for i := 0; i < count; i++ {
-		wins = append(wins, float64(s[i].Wins))
-		loses = append(loses, float64(s[i].Loses))
-		otwins = append(otwins, float64(s[i].OTWins))
-		otloses = append(otloses, float64(s[i].OTLoses))
-		winRegP = append(winRegP, float64(s[i].Wins)/float64(s[i].GP))
-		winAllP = append(winAllP, (float64(s[i].Wins)+float64(s[i].OTWins))/float64(s[i].GP))
-		otP = append(otP, (float64(s[i].OTLoses)+float64(s[i].OTWins))/float64(s[i].GP))
-		gf = append(gf, float64(s[i].GF))
-		ga = append(ga, float64(s[i].GA))
-		gfGP = append(gfGP, float64(s[i].GF)/float64(s[i].GP))
-		gaGP = append(gaGP, float64(s[i].GA)/float64(s[i].GP))
-		points = append(points, float64(s[i].PTS))
-		ptsGP = append(ptsGP, float64(s[i].PTS)/float64(s[i].GP))
-	}
-
-	var output liigaAverages
-	output.Season = s[0].Season
-	output.Description = "top " + strconv.Itoa(count)
-	output.Wins = average(wins...)
-	output.Loses = average(loses...)
-	output.Otwins = average(otwins...)
-	output.Otloses = average(otloses...)
-	output.WinRegP = average(winRegP...)
-	output.WinAllP = average(winAllP...)
-	output.OtP = average(otP...)
-	output.GF = average(gf...)
-	output.GA = average(ga...)
-	output.GFgp = average(gfGP...)
-	output.GAgp = average(gaGP...)
-	output.Points = average(points...)
-	output.PTSgp = average(ptsGP...)
-
-	_ = formatter.PrettyPrint(output)
+	return sAvg
 }
 
 // average for any number of arguments
