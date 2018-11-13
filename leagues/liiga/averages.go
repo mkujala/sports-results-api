@@ -2,17 +2,11 @@ package liiga
 
 import (
 	"net/http"
-	"sports-results/formatter"
 	"sports-results/leagues"
-	"sports-results/standings"
 	"strings"
 
 	"github.com/julienschmidt/httprouter"
 )
-
-type yearlyStnds struct {
-	list map[string][]standings.Standings
-}
 
 // wins, loses, otwins, otloses, win%reg, win%all, ot%, gf, ga, gf/gp, ga/gp, pts, pts/gp
 type liigaAverages struct {
@@ -37,7 +31,7 @@ type liigaAverages struct {
 func Averages(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	venue := p.ByName("venue")
 	seasons := strings.Split(p.ByName("seasons"), ",")
-	stnds := getSeasons(venue, seasons)
+	stnds := leagues.GetSeasons(league, venue, conference, seasons)
 
 	// averages for top2
 	response := seasonAverages(stnds, 0, 2, "top2")
@@ -54,24 +48,15 @@ func Averages(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	leagues.JSONout(w, response)
 }
 
-// GetSeasons get n last seasons sorted by points
-func getSeasons(venue string, seasons []string) yearlyStnds {
-	var stnds = yearlyStnds{list: make(map[string][]standings.Standings)}
-	for _, season := range seasons {
-		stnds.list[season] = leagues.StandingsFromDB(league, venue, season, conference)
-	}
-	return stnds
-}
-
 // seasonAverages takes in yearlyStandings, start, end int, name string
 // it returns slice of calculated liigaAverages
 // if end != 0 -> start is index of first team and end is index of last team to count in averages
 // if end == 0 -> start is count for how many teams from the end to count in averages
 // 		example: end = 0, start = 3 -> count averages for bottom 3 teams
 // name is used as Description in liigaAverages
-func seasonAverages(s yearlyStnds, start, end int, name string) []liigaAverages {
+func seasonAverages(s leagues.YearlyStnds, start, end int, name string) []liigaAverages {
 	sAvg := []liigaAverages{}
-	for _, team := range s.list {
+	for _, team := range s.List {
 		var (
 			wins,
 			loses,
@@ -111,31 +96,21 @@ func seasonAverages(s yearlyStnds, start, end int, name string) []liigaAverages 
 		var output liigaAverages
 		output.Season = team[0].Season
 		output.Description = name
-		output.Wins = average(wins...)
-		output.Loses = average(loses...)
-		output.Otwins = average(otwins...)
-		output.Otloses = average(otloses...)
-		output.WinRegP = average(winRegP...)
-		output.WinAllP = average(winAllP...)
-		output.OtP = average(otP...)
-		output.GF = average(gf...)
-		output.GA = average(ga...)
-		output.GFgp = average(gfGP...)
-		output.GAgp = average(gaGP...)
-		output.Points = average(points...)
-		output.PTSgp = average(ptsGP...)
+		output.Wins = leagues.Average(wins...)
+		output.Loses = leagues.Average(loses...)
+		output.Otwins = leagues.Average(otwins...)
+		output.Otloses = leagues.Average(otloses...)
+		output.WinRegP = leagues.Average(winRegP...)
+		output.WinAllP = leagues.Average(winAllP...)
+		output.OtP = leagues.Average(otP...)
+		output.GF = leagues.Average(gf...)
+		output.GA = leagues.Average(ga...)
+		output.GFgp = leagues.Average(gfGP...)
+		output.GAgp = leagues.Average(gaGP...)
+		output.Points = leagues.Average(points...)
+		output.PTSgp = leagues.Average(ptsGP...)
 
 		sAvg = append(sAvg, output)
 	}
 	return sAvg
-}
-
-// average for any number of arguments
-func average(nums ...float64) float64 {
-	divider := float64(len(nums))
-	var total float64
-	for _, val := range nums {
-		total = total + val
-	}
-	return formatter.Round2F(total / divider)
 }

@@ -10,11 +10,6 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-const (
-	league  = "nba"
-	pythExp = 13.91
-)
-
 // Standings for NBA
 func Standings(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var stnds []standings.Standings

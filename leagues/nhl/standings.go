@@ -9,8 +9,6 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-const league = "nhl"
-
 // Standings for NHL
 func Standings(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var stnds []standings.Standings
