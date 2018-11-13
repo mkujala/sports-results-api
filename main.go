@@ -21,12 +21,12 @@ func main() {
 	router := httprouter.New()
 
 	router.POST(apiURL+"/standings", standings.Insert)
-	router.GET(apiURL+"/liiga/standings/:season/:venue", liiga.Standings)
+	router.GET(apiURL+"/liiga/standings/:venue/:season", liiga.Standings)
 	router.GET(apiURL+"/liiga/averages/:venue/:seasons", liiga.Averages) // seasons -> 20162017,20172018,...
-	router.GET(apiURL+"/epl/standings/:season/:venue", epl.Standings)
-	router.GET(apiURL+"/nhl/standings/:season/:venue/:conference", nhl.Standings)
+	router.GET(apiURL+"/epl/standings/:venue/:season", epl.Standings)
+	router.GET(apiURL+"/nhl/standings/:venue/:season/:conference", nhl.Standings)
 	router.GET(apiURL+"/nhl/averages/:venue/:seasons/:conference", nhl.Averages) // seasons -> 20162017,20172018,...
-	router.GET(apiURL+"/nba/standings/:season/:venue/:conference", nba.Standings)
+	router.GET(apiURL+"/nba/standings/:venue/:season/:conference", nba.Standings)
 	// router.DELETE(apiURL+"/standings/:id", standings.Delete)
 
 	err := http.ListenAndServe(port, router)
