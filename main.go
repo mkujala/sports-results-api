@@ -25,6 +25,7 @@ func main() {
 	router.GET(apiURL+"/liiga/averages/:venue/:seasons", liiga.Averages) // seasons -> 20162017,20172018,...
 	router.GET(apiURL+"/epl/standings/:season/:venue", epl.Standings)
 	router.GET(apiURL+"/nhl/standings/:season/:venue/:conference", nhl.Standings)
+	router.GET(apiURL+"/nhl/averages/:venue/:seasons/:conference", nhl.Averages) // seasons -> 20162017,20172018,...
 	router.GET(apiURL+"/nba/standings/:season/:venue/:conference", nba.Standings)
 	// router.DELETE(apiURL+"/standings/:id", standings.Delete)
 
