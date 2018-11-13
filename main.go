@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"sports-results/leagues/epl"
+	"sports-results/leagues/korisliiga"
 	"sports-results/leagues/liiga"
 	"sports-results/leagues/nba"
 	"sports-results/leagues/nhl"
@@ -27,6 +28,9 @@ func main() {
 	router.GET(apiURL+"/nhl/standings/:venue/:season/:conference", nhl.Standings)
 	router.GET(apiURL+"/nhl/averages/:venue/:seasons/:conference", nhl.Averages) // seasons -> 20162017,20172018,...
 	router.GET(apiURL+"/nba/standings/:venue/:season/:conference", nba.Standings)
+	router.GET(apiURL+"/koris/standings/:venue/:season", korisliiga.Standings)
+	router.GET(apiURL+"/koris/averages/:venue/:seasons", korisliiga.Averages) // seasons -> 20162017,20172018,...
+
 	// router.DELETE(apiURL+"/standings/:id", standings.Delete)
 
 	err := http.ListenAndServe(port, router)
