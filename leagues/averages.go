@@ -11,10 +11,10 @@ type YearlyStnds struct {
 }
 
 // GetSeasons get n last seasons sorted by points
-func GetSeasons(league, venue, conference string, seasons []string) YearlyStnds { // modify liiga to use this!!!!!!!!!!!!
+func GetSeasons(league, venue, conference string, seasons []string) YearlyStnds {
 	var stnds = YearlyStnds{List: make(map[string][]standings.Standings)}
 	for _, season := range seasons {
-		stnds.List[season] = StandingsFromDB(league, venue, season, conference) // nyt const liiga/standings etc
+		stnds.List[season] = StandingsFromDB(league, venue, season, conference)
 	}
 	return stnds
 }

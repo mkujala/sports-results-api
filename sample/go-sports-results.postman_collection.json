@@ -1,0 +1,62 @@
+{
+	"info": {
+		"_postman_id": "b3e5a438-617d-46c9-bf9f-5e529c1f20aa",
+		"name": "go-sports-results",
+		"description": "06.09.2018",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Insert Standings",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\"ga\":134,\n\"gf\":195,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":11,\n\"otLoses\":8,\n\"otWins\":8,\n\"pts\":123,\n\"season\":20172018,\n\"team\":\"Kärpät\",\n\"venue\":\"all\",\n\"wins\":33\n},\n{\n\"ga\":147,\n\"gf\":187,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":15,\n\"otLoses\":8,\n\"otWins\":7,\n\"pts\":112,\n\"season\":20172018,\n\"team\":\"TPS\",\n\"venue\":\"all\",\n\"wins\":30\n},\n{\n\"ga\":130,\n\"gf\":165,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":14,\n\"otLoses\":7,\n\"otWins\":14,\n\"pts\":110,\n\"season\":20172018,\n\"team\":\"Tappara\",\n\"venue\":\"all\",\n\"wins\":25\n},\n{\n\"ga\":145,\n\"gf\":187,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":20,\n\"otLoses\":4,\n\"otWins\":4,\n\"pts\":108,\n\"season\":20172018,\n\"team\":\"JYP\",\n\"venue\":\"all\",\n\"wins\":32\n},\n{\n\"ga\":128,\n\"gf\":163,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":17,\n\"otLoses\":9,\n\"otWins\":8,\n\"pts\":103,\n\"season\":20172018,\n\"team\":\"HIFK\",\n\"venue\":\"all\",\n\"wins\":26\n},\n{\n\"ga\":136,\n\"gf\":144,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":20,\n\"otLoses\":7,\n\"otWins\":7,\n\"pts\":99,\n\"season\":20172018,\n\"team\":\"KalPa\",\n\"venue\":\"all\",\n\"wins\":26\n},\n{\n\"ga\":163,\n\"gf\":153,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":20,\n\"otLoses\":8,\n\"otWins\":11,\n\"pts\":93,\n\"season\":20172018,\n\"team\":\"SaiPa\",\n\"venue\":\"all\",\n\"wins\":21\n},\n{\n\"ga\":177,\n\"gf\":163,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":25,\n\"otLoses\":5,\n\"otWins\":7,\n\"pts\":88,\n\"season\":20172018,\n\"team\":\"Ässät\",\n\"venue\":\"all\",\n\"wins\":23\n},\n{\n\"ga\":142,\n\"gf\":141,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":25,\n\"otLoses\":6,\n\"otWins\":8,\n\"pts\":85,\n\"season\":20172018,\n\"team\":\"Lukko\",\n\"venue\":\"all\",\n\"wins\":21\n},\n{\n\"ga\":175,\n\"gf\":165,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":24,\n\"otLoses\":9,\n\"otWins\":7,\n\"pts\":83,\n\"season\":20172018,\n\"team\":\"Pelicans\",\n\"venue\":\"all\",\n\"wins\":20\n},\n{\n\"ga\":190,\n\"gf\":162,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":26,\n\"otLoses\":8,\n\"otWins\":5,\n\"pts\":81,\n\"season\":20172018,\n\"team\":\"Ilves\",\n\"venue\":\"all\",\n\"wins\":21\n},\n{\n\"ga\":157,\n\"gf\":145,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":29,\n\"otLoses\":4,\n\"otWins\":7,\n\"pts\":78,\n\"season\":20172018,\n\"team\":\"HPK\",\n\"venue\":\"all\",\n\"wins\":20\n},\n{\n\"ga\":170,\n\"gf\":133,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":30,\n\"otLoses\":9,\n\"otWins\":5,\n\"pts\":67,\n\"season\":20172018,\n\"team\":\"Jukurit\",\n\"venue\":\"all\",\n\"wins\":16\n},\n{\n\"ga\":198,\n\"gf\":142,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":31,\n\"otLoses\":10,\n\"otWins\":5,\n\"pts\":62,\n\"season\":20172018,\n\"team\":\"KooKoo\",\n\"venue\":\"all\",\n\"wins\":14\n},\n{\n\"ga\":206,\n\"gf\":153,\n\"gp\":60,\n\"league\":\"liiga\",\n\"loses\":33,\n\"otLoses\":8,\n\"otWins\":7,\n\"pts\":58,\n\"season\":20172018,\n\"team\":\"Sport\",\n\"venue\":\"all\",\n\"wins\":12\n}]"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/standings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"standings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ALL Standings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/standings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"standings"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
