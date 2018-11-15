@@ -42,7 +42,8 @@ func JSONout(w http.ResponseWriter, data leagueData) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated) // 201
+	w.WriteHeader(http.StatusOK) // 200
 	fmt.Fprintf(w, "%s\n", sjson)
 }
