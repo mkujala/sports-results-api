@@ -1,10 +1,9 @@
 package db
 
-/*
-const (
-	user     = "username"
-	password = "pass"
-	mongoURI = "mongodb://localhost"
-	mongoDB  = "sport-results"
-)
-*/
+// const (
+// 	mongoUser = "username"
+// 	mongoPass = "pass"
+// 	mongoURI  = "mongodb://localhost"
+//  mongoURI  = "ds211115.mlab.com:13665"
+// 	mongoDB   = "sport-results"
+// )

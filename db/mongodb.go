@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/globalsign/mgo"
 )
@@ -18,7 +19,15 @@ var (
 )
 
 func init() {
-	s, err := mgo.Dial(mongoURI)
+	mongoDBDialInfo := &mgo.DialInfo{
+		Addrs:    []string{mongoURI},
+		Timeout:  60 * time.Second,
+		Database: mongoDB,
+		Username: mongoUser,
+		Password: mongoPass,
+	}
+
+	s, err := mgo.DialWithInfo(mongoDBDialInfo)
 	if err != nil {
 		panic(err)
 	}
