@@ -6,11 +6,6 @@ import (
 	"github.com/globalsign/mgo"
 )
 
-const (
-	mongoURI = "mongodb://localhost"
-	mongoDB  = "sport-results"
-)
-
 var (
 	// DB session
 	DB *mgo.Database
