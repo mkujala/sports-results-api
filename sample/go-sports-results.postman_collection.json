@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b3e5a438-617d-46c9-bf9f-5e529c1f20aa",
+		"_postman_id": "3b641490-8ad8-47a3-b44e-846183df6d8a",
 		"name": "go-sports-results",
 		"description": "06.09.2018",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -34,16 +34,68 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Insert Standings",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\"conference\":\"west\",\"ga\":145,\"gf\":190,\"gp\":51,\"league\":\"nhl\",\"loses\":13,\"otLoses\":5,\"otWins\":5,\"pts\":71,\"season\":20182019,\"team\":\"Calgary Flames\",\"venue\":\"all\",\"wins\":28},{\"conference\":\"west\",\"ga\":167,\"gf\":187,\"gp\":52,\"league\":\"nhl\",\"loses\":16,\"otLoses\":7,\"otWins\":4,\"pts\":65,\"season\":20182019,\"team\":\"San Jose Sharks\",\"venue\":\"all\",\"wins\":25},{\"conference\":\"west\",\"ga\":134,\"gf\":167,\"gp\":48,\"league\":\"nhl\",\"loses\":15,\"otLoses\":2,\"otWins\":7,\"pts\":64,\"season\":20182019,\"team\":\"Winnipeg Jets\",\"venue\":\"all\",\"wins\":24},{\"conference\":\"west\",\"ga\":135,\"gf\":161,\"gp\":52,\"league\":\"nhl\",\"loses\":18,\"otLoses\":4,\"otWins\":5,\"pts\":64,\"season\":20182019,\"team\":\"Nashville Predators\",\"venue\":\"all\",\"wins\":25},{\"conference\":\"west\",\"ga\":140,\"gf\":157,\"gp\":52,\"league\":\"nhl\",\"loses\":19,\"otLoses\":4,\"otWins\":5,\"pts\":62,\"season\":20182019,\"team\":\"Vegas Golden Knights\",\"venue\":\"all\",\"wins\":24},{\"conference\":\"west\",\"ga\":142,\"gf\":142,\"gp\":50,\"league\":\"nhl\",\"loses\":21,\"otLoses\":3,\"otWins\":3,\"pts\":55,\"season\":20182019,\"team\":\"Minnesota Wild\",\"venue\":\"all\",\"wins\":23},{\"conference\":\"west\",\"ga\":128,\"gf\":126,\"gp\":49,\"league\":\"nhl\",\"loses\":21,\"otLoses\":4,\"otWins\":5,\"pts\":52,\"season\":20182019,\"team\":\"Dallas Stars\",\"venue\":\"all\",\"wins\":19},{\"conference\":\"west\",\"ga\":162,\"gf\":169,\"gp\":50,\"league\":\"nhl\",\"loses\":20,\"otLoses\":8,\"otWins\":1,\"pts\":52,\"season\":20182019,\"team\":\"Colorado Avalanche\",\"venue\":\"all\",\"wins\":21},{\"conference\":\"west\",\"ga\":161,\"gf\":147,\"gp\":51,\"league\":\"nhl\",\"loses\":22,\"otLoses\":6,\"otWins\":6,\"pts\":52,\"season\":20182019,\"team\":\"Vancouver Canucks\",\"venue\":\"all\",\"wins\":17},{\"conference\":\"west\",\"ga\":153,\"gf\":120,\"gp\":51,\"league\":\"nhl\",\"loses\":21,\"otLoses\":9,\"otWins\":7,\"pts\":51,\"season\":20182019,\"team\":\"Anaheim Ducks\",\"venue\":\"all\",\"wins\":14},{\"conference\":\"west\",\"ga\":142,\"gf\":132,\"gp\":50,\"league\":\"nhl\",\"loses\":23,\"otLoses\":4,\"otWins\":6,\"pts\":50,\"season\":20182019,\"team\":\"Arizona Coyotes\",\"venue\":\"all\",\"wins\":17},{\"conference\":\"west\",\"ga\":149,\"gf\":139,\"gp\":49,\"league\":\"nhl\",\"loses\":22,\"otLoses\":5,\"otWins\":2,\"pts\":49,\"season\":20182019,\"team\":\"St.Louis Blues\",\"venue\":\"all\",\"wins\":20},{\"conference\":\"west\",\"ga\":163,\"gf\":144,\"gp\":50,\"league\":\"nhl\",\"loses\":24,\"otLoses\":3,\"otWins\":8,\"pts\":49,\"season\":20182019,\"team\":\"Edmonton Oilers\",\"venue\":\"all\",\"wins\":15},{\"conference\":\"west\",\"ga\":190,\"gf\":156,\"gp\":51,\"league\":\"nhl\",\"loses\":24,\"otLoses\":9,\"otWins\":6,\"pts\":45,\"season\":20182019,\"team\":\"Chicago Blackhawks\",\"venue\":\"all\",\"wins\":12},{\"conference\":\"west\",\"ga\":150,\"gf\":114,\"gp\":50,\"league\":\"nhl\",\"loses\":26,\"otLoses\":4,\"otWins\":5,\"pts\":44,\"season\":20182019,\"team\":\"Los Angeles Kings\",\"venue\":\"all\",\"wins\":15}]"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/standings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"standings"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 27 Jan 2019 19:41:05 GMT"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"team\": \"Balgary Flames\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 51,\n        \"wins\": 28,\n        \"loses\": 13,\n        \"otLoses\": 5,\n        \"otWins\": 5,\n        \"ga\": 145,\n        \"gf\": 190,\n        \"pts\": 71\n    },\n    {\n        \"team\": \"San Jose Sharks\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 52,\n        \"wins\": 25,\n        \"loses\": 16,\n        \"otLoses\": 7,\n        \"otWins\": 4,\n        \"ga\": 167,\n        \"gf\": 187,\n        \"pts\": 65\n    },\n    {\n        \"team\": \"Winnipeg Jets\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 48,\n        \"wins\": 24,\n        \"loses\": 15,\n        \"otLoses\": 2,\n        \"otWins\": 7,\n        \"ga\": 134,\n        \"gf\": 167,\n        \"pts\": 64\n    },\n    {\n        \"team\": \"Nashville Predators\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 52,\n        \"wins\": 25,\n        \"loses\": 18,\n        \"otLoses\": 4,\n        \"otWins\": 5,\n        \"ga\": 135,\n        \"gf\": 161,\n        \"pts\": 64\n    },\n    {\n        \"team\": \"Vegas Golden Knights\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 52,\n        \"wins\": 24,\n        \"loses\": 19,\n        \"otLoses\": 4,\n        \"otWins\": 5,\n        \"ga\": 140,\n        \"gf\": 157,\n        \"pts\": 62\n    },\n    {\n        \"team\": \"Minnesota Wild\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 50,\n        \"wins\": 23,\n        \"loses\": 21,\n        \"otLoses\": 3,\n        \"otWins\": 3,\n        \"ga\": 142,\n        \"gf\": 142,\n        \"pts\": 55\n    },\n    {\n        \"team\": \"Dallas Stars\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 49,\n        \"wins\": 19,\n        \"loses\": 21,\n        \"otLoses\": 4,\n        \"otWins\": 5,\n        \"ga\": 128,\n        \"gf\": 126,\n        \"pts\": 52\n    },\n    {\n        \"team\": \"Colorado Avalanche\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 50,\n        \"wins\": 21,\n        \"loses\": 20,\n        \"otLoses\": 8,\n        \"otWins\": 1,\n        \"ga\": 162,\n        \"gf\": 169,\n        \"pts\": 52\n    },\n    {\n        \"team\": \"Vancouver Canucks\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 51,\n        \"wins\": 17,\n        \"loses\": 22,\n        \"otLoses\": 6,\n        \"otWins\": 6,\n        \"ga\": 161,\n        \"gf\": 147,\n        \"pts\": 52\n    },\n    {\n        \"team\": \"Anaheim Ducks\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 51,\n        \"wins\": 14,\n        \"loses\": 21,\n        \"otLoses\": 9,\n        \"otWins\": 7,\n        \"ga\": 153,\n        \"gf\": 120,\n        \"pts\": 51\n    },\n    {\n        \"team\": \"Arizona Coyotes\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 50,\n        \"wins\": 17,\n        \"loses\": 23,\n        \"otLoses\": 4,\n        \"otWins\": 6,\n        \"ga\": 142,\n        \"gf\": 132,\n        \"pts\": 50\n    },\n    {\n        \"team\": \"St.Louis Blues\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 49,\n        \"wins\": 20,\n        \"loses\": 22,\n        \"otLoses\": 5,\n        \"otWins\": 2,\n        \"ga\": 149,\n        \"gf\": 139,\n        \"pts\": 49\n    },\n    {\n        \"team\": \"Edmonton Oilers\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 50,\n        \"wins\": 15,\n        \"loses\": 24,\n        \"otLoses\": 3,\n        \"otWins\": 8,\n        \"ga\": 163,\n        \"gf\": 144,\n        \"pts\": 49\n    },\n    {\n        \"team\": \"Chicago Blackhawks\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 51,\n        \"wins\": 12,\n        \"loses\": 24,\n        \"otLoses\": 9,\n        \"otWins\": 6,\n        \"ga\": 190,\n        \"gf\": 156,\n        \"pts\": 45\n    },\n    {\n        \"team\": \"Los Angeles Kings\",\n        \"season\": 20182019,\n        \"league\": \"nhl\",\n        \"conference\": \"west\",\n        \"venue\": \"all\",\n        \"gp\": 50,\n        \"wins\": 15,\n        \"loses\": 26,\n        \"otLoses\": 4,\n        \"otWins\": 5,\n        \"ga\": 150,\n        \"gf\": 114,\n        \"pts\": 44\n    }\n]"
+				}
+			]
 		},
 		{
 			"name": "Get ALL Standings",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://localhost:8000/api/v1/standings",
+					"raw": "http://localhost:8000/api/v1/nhl/standings/all/20182019/west",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -52,8 +104,27 @@
 					"path": [
 						"api",
 						"v1",
-						"standings"
+						"nhl",
+						"standings",
+						"all",
+						"20182019",
+						"west"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Replace standings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []

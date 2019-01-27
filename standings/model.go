@@ -99,3 +99,24 @@ func insertDB(r *http.Request) ([]Standings, error) {
 	err = db.Standings.Insert(s...)
 	return stnds, err
 }
+
+func removeFromDB(league, venue, conference string, season int) (int, error) {
+	var err error
+	var numRemoved int
+
+	switch conference {
+	case "NULL": // NULL used with leagues that doesn't have conferences
+		info, error := db.Standings.RemoveAll(bson.M{"league": league, "venue": venue, "season": season})
+		numRemoved = info.Removed
+		if error != nil {
+			err = error
+		}
+	default:
+		info, error := db.Standings.RemoveAll(bson.M{"league": league, "venue": venue, "season": season, "conference": conference})
+		numRemoved = info.Removed
+		if error != nil {
+			err = error
+		}
+	}
+	return numRemoved, err
+}

@@ -22,6 +22,7 @@ func main() {
 	router := httprouter.New()
 
 	router.POST(apiURL+"/standings", standings.Insert)
+	router.POST(apiURL+"/standings/replace/:league/:venue/:season/:conference", standings.Replace) // use conference value NULL, when league doesn't have conferences
 	router.GET(apiURL+"/liiga/standings/:venue/:season", liiga.Standings)
 	router.GET(apiURL+"/liiga/averages/:venue/:seasons", liiga.Averages) // seasons -> 20162017,20172018,...
 	router.GET(apiURL+"/epl/standings/:venue/:season", epl.Standings)
