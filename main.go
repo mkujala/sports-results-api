@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"sports-results/config"
 	"sports-results/leagues/epl"
 	"sports-results/leagues/korisliiga"
 	"sports-results/leagues/liiga"
@@ -13,14 +14,12 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-const (
-	apiURL = "/api/v1"
-	port   = ":8000"
-)
-
 func main() {
-	router := httprouter.New()
+	config := config.Values()
+	apiURL := config.APIURL
+	port := config.Port
 
+	router := httprouter.New()
 	router.POST(apiURL+"/standings", standings.Insert)
 	router.POST(apiURL+"/standings/replace/:league/:venue/:season/:conference", standings.Replace) // use conference value NULL, when league doesn't have conferences
 	router.GET(apiURL+"/liiga/standings/:venue/:season", liiga.Standings)
