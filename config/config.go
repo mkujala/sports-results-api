@@ -29,7 +29,10 @@ func Values() Config {
 	}
 	defer jsonFile.Close()
 
-	byteValue, _ := ioutil.ReadAll(jsonFile)
+	byteValue, err := ioutil.ReadAll(jsonFile)
+	if err != nil {
+		log.Fatal(err)
+	}
 	var config Config
 	json.Unmarshal(byteValue, &config)
 
