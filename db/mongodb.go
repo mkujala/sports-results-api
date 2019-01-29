@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"sports-results/config"
 	"time"
 
 	"github.com/globalsign/mgo"
@@ -19,12 +20,13 @@ var (
 )
 
 func init() {
+	config := config.Values()
 	mongoDBDialInfo := &mgo.DialInfo{
-		Addrs:    []string{mongoURI},
+		Addrs:    []string{config.DB.URI},
 		Timeout:  60 * time.Second,
-		Database: mongoDB,
-		Username: mongoUser,
-		Password: mongoPass,
+		Database: config.DB.Name,
+		Username: config.DB.User,
+		Password: config.DB.Pass,
 	}
 
 	s, err := mgo.DialWithInfo(mongoDBDialInfo)
@@ -36,9 +38,9 @@ func init() {
 		panic(err)
 	}
 
-	DB = s.DB(mongoDB)
+	DB = s.DB(config.DB.Name)
 	Games = DB.C("games")
 	Standings = DB.C("standings")
 
-	fmt.Printf("You connected to your %s database.\n", mongoDB)
+	fmt.Printf("You connected to your %s database.\n", config.DB.Name)
 }

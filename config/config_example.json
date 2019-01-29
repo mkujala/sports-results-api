@@ -1,0 +1,11 @@
+{
+  "Env": "dev",
+  "Port": ":8000",
+  "ApiURL": "/api/v1",
+  "DB": {
+    "Name": "sport-results",
+	  "URI":  "ds123456.mlab.com:13665",
+    "User": "username",
+	  "Pass": "secret"
+  }
+}
