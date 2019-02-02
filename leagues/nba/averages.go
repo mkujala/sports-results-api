@@ -30,7 +30,7 @@ type nbaAverages struct {
 	PTSgp float64
 }
 
-// Averages returns liiga specific averages for selected venue and seasons
+// Averages returns league specific averages for selected venue and seasons
 func Averages(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	venue := p.ByName("venue")
 	seasons := strings.Split(p.ByName("seasons"), ",")

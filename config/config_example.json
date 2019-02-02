@@ -4,8 +4,8 @@
   "ApiURL": "/api/v1",
   "DB": {
     "Name": "sport-results",
-	  "URI":  "ds123456.mlab.com:13665",
+    "URI":  "ds123456.mlab.com:13665",
     "User": "username",
-	  "Pass": "secret"
+    "Pass": "secret"
   }
 }
